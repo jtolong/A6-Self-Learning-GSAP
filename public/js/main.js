@@ -1,5 +1,5 @@
 // register gsap plugins
-gsap.registerPlugin(ScrollTrigger, Flip);
+gsap.registerPlugin(ScrollTrigger, Flip, TextPlugin);
 
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let motionEnabled = !prefersReduced;
@@ -40,7 +40,7 @@ const reveal = (selector) => {
 };
 reveal('.reveal-from-bottom'); reveal('.reveal-from-left'); reveal('.reveal-from-right');
 
-// Chapter 1 animation: compare boxes
+// Chapter 1: compare boxes
 if (motionEnabled) {
   gsap.from('#chapter1 .css-box', { x: -80, opacity: 0, duration: 0.8, ease: 'power2.out', scrollTrigger: '#chapter1' });
   gsap.from('#chapter1 .gsap-box', { x: 80, opacity: 0, duration: 0.8, ease: 'power2.out', scrollTrigger: '#chapter1', delay: 0.1 });
@@ -108,14 +108,14 @@ function flipTo(orderFn) {
 btnShuffle?.addEventListener('click', () => flipTo(shuffle));
 btnSort?.addEventListener('click', () => flipTo(sortAZ));
 
-// Chapter 6: motion toggle and device hint animations
-const motionToggle = document.getElementById('motion-toggle');
-motionToggle?.addEventListener('click', () => {
+// Chapter 6: motion toggle demo (visual pulse)
+const screens = document.querySelectorAll('.screen');
+const pulseScreens = () => gsap.fromTo(screens, { scale: 0.98 }, { scale: 1, duration: 0.3, ease: 'power1.out' });
+document.getElementById('motion-toggle')?.addEventListener('click', () => {
   motionEnabled = !motionEnabled;
-  // quick feedback pulse on screens
   if (motionEnabled) {
-    gsap.fromTo('.screen', { scale: 0.98 }, { scale: 1, duration: 0.3, ease: 'power1.out' });
     ScrollTrigger.getAll().forEach(st => st.enable());
+    pulseScreens();
   } else {
     ScrollTrigger.getAll().forEach(st => st.disable());
   }
@@ -149,7 +149,6 @@ function confetti() {
   const pieces = 48;
   for (let i = 0; i < pieces; i++) {
     const dot = document.createElement('span');
-    dot.className = 'confetti';
     Object.assign(dot.style, {
       position: 'absolute', left: '50%', top: '50%',
       width: `${gsap.utils.random(6, 10)}px`, height: `${gsap.utils.random(6, 10)}px`,
@@ -172,6 +171,18 @@ function confetti() {
 claimBtn?.addEventListener('click', () => {
   gsap.to(badge, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(1.7)' });
   confetti();
+});
+
+// type-in effect for callout quotes
+gsap.utils.toArray('.callout blockquote').forEach((q) => {
+  ScrollTrigger.create({
+    trigger: q, start: 'top 80%', once: true,
+    onEnter: () => {
+      const original = q.textContent;
+      q.textContent = '';
+      gsap.to(q, { text: original, duration: 1.2, ease: 'none' });
+    }
+  });
 });
 
 // smooth in-page links

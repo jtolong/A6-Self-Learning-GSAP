@@ -33,50 +33,70 @@
   </header>
 
   <main id="main">
-    <!-- Chapter 1: Starting point -->
+    <!-- Chapter 1 — From “meh” to motion -->
     <section id="chapter1" class="panel hero">
       <div class="container hero-inner">
-        <h1 class="reveal-from-bottom">Chapter 1 — Starting Point</h1>
+        <h1 class="reveal-from-bottom">Chapter 1 — From “meh” to motion</h1>
         <p class="lead reveal-from-bottom delay-1">
-          Before this project, my animations were basic CSS fades. I wanted control, timing, and scroll‑based motion.
+          My pages worked—but they felt like PowerPoint slides. I wanted animation that guides attention, sets pace, and feels intentional.
         </p>
+
         <div class="compare">
-          <div class="box css-box">CSS fade</div>
-          <div class="box gsap-box">GSAP control</div>
+          <div class="box css-box">
+            <h3>Before</h3>
+            <p>Tiny CSS fades, no sequencing, inconsistent timing.</p>
+          </div>
+          <div class="box gsap-box">
+            <h3>After (goal)</h3>
+            <p>Choreographed beats, scroll‑aware transitions, reusable timings.</p>
+          </div>
         </div>
+
+        <figure class="callout reveal-from-bottom delay-2">
+          <blockquote>“Animation isn’t decoration—it’s a conversation.”</blockquote>
+          <figcaption>Why I picked GSAP</figcaption>
+        </figure>
+
         <img class="hero-img reveal-from-bottom delay-2" src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1600&auto=format&fit=crop" alt="Laptop with code editor"/>
       </div>
     </section>
 
-    <!-- Chapter 2: First steps with GSAP -->
+    <!-- Chapter 2 — Learning the verbs -->
     <section id="chapter2" class="panel">
       <div class="container two-col">
         <div class="col text">
-          <h2 class="reveal-from-left">Chapter 2 — First Steps</h2>
+          <h2 class="reveal-from-left">Chapter 2 — Learning the verbs</h2>
           <p class="reveal-from-left delay-1">
-            I started with .to and .from, then chained them in a timeline. Small wins add up fast.
+            GSAP clicked when I thought in verbs: <em>move</em>, <em>fade</em>, <em>scale</em>. Timelines let me stack those verbs into a sentence the browser can “perform.”
           </p>
-          <button id="btn-demo" class="btn reveal-from-left delay-2" type="button">Play a tiny timeline</button>
+          <ul class="bullets reveal-from-left delay-2">
+            <li><code>.from()</code> for entrances that feel motivated</li>
+            <li><code>.to()</code> for state changes without surprise</li>
+            <li><code>.timeline()</code> to layer beats and overlap</li>
+          </ul>
+          <button id="btn-demo" class="btn reveal-from-left delay-2" type="button">Play the mini‑timeline</button>
         </div>
+
         <div class="col media">
           <figure class="code-card reveal-from-right">
-<pre><code class="code">// first-steps.js
+<pre><code class="code">// first-steps.js (my “aha!”)
 const tl = gsap.timeline({ defaults: { duration: 0.6, ease: "power2.out" }});
-tl.from(".demo-one", { y: 30, opacity: 0 })
-  .from(".demo-two", { x: -30, opacity: 0 }, "&lt;0.2")
-  .from(".demo-three", { scale: 0.9, opacity: 0 }, "&lt;0.2");</code></pre>
-            <figcaption>Timeline basics</figcaption>
+tl.from(".demo-one",   { y: 24, opacity: 0 })
+  .from(".demo-two",   { x: -24, opacity: 0 }, "&lt;0.15")
+  .from(".demo-three", { scale: 0.9, opacity: 0 }, "&lt;0.15");</code></pre>
+            <figcaption>Timelines = choreography</figcaption>
           </figure>
+
           <div class="demo-dots">
-            <span class="demo-one dot"></span>
-            <span class="demo-two dot"></span>
-            <span class="demo-three dot"></span>
+            <span class="demo-one dot" title="beat one"></span>
+            <span class="demo-two dot" title="beat two"></span>
+            <span class="demo-three dot" title="beat three"></span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Chapter 3: ScrollTrigger (pinned walkthrough) -->
+    <!-- Chapter 3 — ScrollTrigger -->
     <section id="chapter3" class="panel">
       <div class="container two-col reverse pin-wrap">
         <div class="col media pin-target">
@@ -89,79 +109,118 @@ ScrollTrigger.create({
   pin: ".pin-target",
   scrub: true
 });</code></pre>
-            <figcaption>Pin the visual while text scrolls</figcaption>
+            <figcaption>Pinning: hold focus while the story moves</figcaption>
           </figure>
         </div>
+
         <div class="col text steps">
-          <h2 class="reveal-from-right">Chapter 3 — ScrollTrigger</h2>
-          <p class="step reveal-from-right delay-1">Pin keeps focus while content flows.</p>
-          <p class="step reveal-from-right">Start and end control pacing.</p>
-          <p class="step reveal-from-right">Scrub ties animation to scroll position.</p>
+          <h2 class="reveal-from-right">Chapter 3 — Scroll as a remote</h2>
+          <p class="step reveal-from-right delay-1"><strong>Pin:</strong> Keep the visual steady while text changes around it.</p>
+          <p class="step reveal-from-right"><strong>Start/End:</strong> Tune pacing like editing a video—frame by frame.</p>
+          <p class="step reveal-from-right"><strong>Scrub:</strong> Map progress to the user’s scroll for tactile control.</p>
+
+          <figure class="callout reveal-from-right">
+            <blockquote>“The right start value turns jitter into rhythm.”</blockquote>
+            <figcaption>Note from my debugging log</figcaption>
+          </figure>
         </div>
       </div>
     </section>
 
-    <!-- Chapter 4: Staggering and sequencing -->
+    <!-- Chapter 4 — Stagger & Sequence -->
     <section id="chapter4" class="panel alt">
       <div class="container">
-        <h2 class="reveal-from-bottom">Chapter 4 — Stagger and Sequence</h2>
-        <p class="reveal-from-bottom delay-1">Stagger guides attention. Sequence creates rhythm.</p>
-        <div class="icon-grid">
-          <div class="icon">A</div><div class="icon">B</div><div class="icon">C</div><div class="icon">D</div>
-          <div class="icon">E</div><div class="icon">F</div><div class="icon">G</div><div class="icon">H</div>
-          <div class="icon">I</div><div class="icon">J</div><div class="icon">K</div><div class="icon">L</div>
+        <h2 class="reveal-from-bottom">Chapter 4 — Make order visible</h2>
+        <p class="reveal-from-bottom delay-1">
+          Staggering shows priority. Sequencing shows relationships. Together, they make content feel <em>intentional</em>.
+        </p>
+
+        <div class="icon-grid" aria-label="concepts grid">
+          <div class="icon">Hierarchy</div><div class="icon">Anticipation</div><div class="icon">Overlap</div><div class="icon">Echo</div>
+          <div class="icon">Delay</div><div class="icon">Rhythm</div><div class="icon">Weight</div><div class="icon">Scale</div>
+          <div class="icon">Flow</div><div class="icon">Beat</div><div class="icon">Space</div><div class="icon">Rest</div>
         </div>
+
+        <p class="tip reveal-from-bottom">Tip: start from the edges, end at the center—eyes love converging motion.</p>
       </div>
     </section>
 
-    <!-- Chapter 5: Flip plugin (rearrange gallery) -->
+    <!-- Chapter 5 — Flip -->
     <section id="chapter5" class="panel">
       <div class="container">
-        <h2 class="reveal-from-bottom">Chapter 5 — Flip for Layout Changes</h2>
-        <p class="reveal-from-bottom delay-1">Flip makes re‑ordering feel natural. Click to shuffle the layout.</p>
+        <h2 class="reveal-from-bottom">Chapter 5 — Layout that morphs</h2>
+        <p class="reveal-from-bottom delay-1">
+          Flip turns “teleporting” layouts into believable motion. The brain sees continuity, not chaos.
+        </p>
+
         <div class="flip-controls">
           <button id="flip-shuffle" class="btn outline">Shuffle</button>
           <button id="flip-sort" class="btn outline">Sort A–Z</button>
         </div>
+
         <div class="flip-grid" id="flip-grid">
-          <figure class="tile" data-key="A"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=900&auto=format&fit=crop" alt="Abstract 1"><figcaption>A — Timing</figcaption></figure>
-          <figure class="tile" data-key="C"><img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=900&auto=format&fit=crop" alt="Abstract 2"><figcaption>C — Stagger</figcaption></figure>
-          <figure class="tile" data-key="B"><img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=900&auto=format&fit=crop" alt="Abstract 3"><figcaption>B — Pinning</figcaption></figure>
-          <figure class="tile" data-key="D"><img src="https://images.unsplash.com/photo-1526498460520-4c246339dccb?q=80&w=900&auto=format&fit=crop" alt="Abstract 4"><figcaption>D — Scrub</figcaption></figure>
+          <figure class="tile" data-key="A"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=900&auto=format&fit=crop" alt="Abstract gradients"><figcaption>A — Timing</figcaption></figure>
+          <figure class="tile" data-key="C"><img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=900&auto=format&fit=crop" alt="Notebook with code"><figcaption>C — Stagger</figcaption></figure>
+          <figure class="tile" data-key="B"><img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=900&auto=format&fit=crop" alt="Laptop with editor"><figcaption>B — Pinning</figcaption></figure>
+          <figure class="tile" data-key="D"><img src="https://images.unsplash.com/photo-1526498460520-4c246339dccb?q=80&w=900&auto=format&fit=crop" alt="Color blocks"><figcaption>D — Scrub</figcaption></figure>
         </div>
+
+        <figure class="callout reveal-from-bottom">
+          <blockquote>Continuity beats cleverness when things move.</blockquote>
+          <figcaption>Why Flip matters</figcaption>
+        </figure>
       </div>
     </section>
 
-    <!-- Chapter 6: Responsive and accessible animation -->
+    <!-- Chapter 6 — Responsive & Accessible -->
     <section id="chapter6" class="panel alt center">
       <div class="container narrow">
-        <h2 class="reveal-from-bottom">Chapter 6 — Responsive and Accessible</h2>
+        <h2 class="reveal-from-bottom">Chapter 6 — Ship for everyone</h2>
         <p class="reveal-from-bottom delay-1">
-          I tested on phone and laptop sizes and honored prefers‑reduced‑motion. You can toggle motion below to preview the difference.
+          I tested the animations at phone and laptop sizes, and I respect <code>prefers-reduced-motion</code>. When motion is off, content still reads cleanly.
         </p>
-        <div class="cta-row">
-          <button id="motion-toggle" class="btn">Toggle motion</button>
-        </div>
+
         <div class="device-row">
-          <div class="device phone"><div class="screen demo-phone">mobile</div></div>
-          <div class="device laptop"><div class="screen demo-laptop">desktop</div></div>
+          <div class="device phone">
+            <div class="screen demo-phone">
+              <span class="screen-label">mobile layout</span>
+            </div>
+          </div>
+          <div class="device laptop">
+            <div class="screen demo-laptop">
+              <span class="screen-label">desktop layout</span>
+            </div>
+          </div>
         </div>
+
+        <ul class="checklist reveal-from-bottom">
+          <li>Readable without animation</li>
+          <li>Focusable controls with clear affordances</li>
+          <li>Reduced motion toggle verified</li>
+        </ul>
       </div>
     </section>
 
-    <!-- Chapter 7: Final takeaways -->
+    <!-- Chapter 7 — Takeaways -->
     <section id="chapter7" class="panel center">
       <div class="container narrow">
-        <h2 class="reveal-from-bottom">Chapter 7 — Takeaways</h2>
+        <h2 class="reveal-from-bottom">Chapter 7 — What stuck</h2>
         <p class="reveal-from-bottom delay-1">
-          I hit my goal. I learned timelines, ScrollTrigger, stagger, and Flip — and how to pace motion so it reads well.
+          Motion teaches the eye how to read the page. My biggest wins were pacing, continuity, and knowing when to stop.
         </p>
+
         <div class="stats">
           <div class="stat"><span class="num" data-target="7">0</span><span class="label">Chapters</span></div>
           <div class="stat"><span class="num" data-target="12">0</span><span class="label">Days</span></div>
           <div class="stat"><span class="num" data-target="40">0</span><span class="label">Commits</span></div>
           <div class="stat"><span class="num" data-target="1100">0</span><span class="label">Lines</span></div>
         </div>
+
+        <figure class="callout reveal-from-bottom">
+          <blockquote>Next: refine timings into a small design system for animation.</blockquote>
+          <figcaption>Roadmap</figcaption>
+        </figure>
+
         <div class="cta-row">
           <a href="#chapter1" class="btn outline">Back to top</a>
           <button id="claim-badge" class="btn" type="button">Claim badge</button>
@@ -175,10 +234,11 @@ ScrollTrigger.create({
     <div class="container"><p>Built with GSAP, ScrollTrigger, and Flip. Respects prefers‑reduced‑motion.</p></div>
   </footer>
 
-  <!-- libs -->
+  <!-- gsap libs -->
   <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
   <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/gsap@3/dist/Flip.min.js"></script>
+  <script src="https://unpkg.com/gsap@3/dist/TextPlugin.min.js"></script>
 
   <!-- custom js -->
   <script src="js/main.js"></script>
