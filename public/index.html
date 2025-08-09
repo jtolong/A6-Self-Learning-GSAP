@@ -1,74 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Learning GSAP</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learning GSAP</title>
 
-    <!-- reset & fonts -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@3.0.0/reset.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap"
-        rel="stylesheet" />
+  <!-- reset & fonts -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@3.0.0/reset.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
 
-    <!-- css libraries -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css" />
-
-    <!-- custom css -->
-    <link rel="stylesheet" href="css/style.css" />
+  <!-- custom css -->
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-
 <body>
-<header class="site-header">
-  <div class="progress-wrap" aria-hidden="true">
-    <div class="progress-bar"></div>
-  </div>
-  <nav class="container nav">
-    <div class="brand">Learning GSAP</div>
-    <ul class="nav-links">
-      <li><a href="#intro">Intro</a></li>
-      <li><a href="#problem">The Problem</a></li>
-      <li><a href="#discover">Discovering GSAP</a></li>
-      <li><a href="#chapter-h">Concepts</a></li>
-      <li><a href="#results">Results</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#outro">Finish</a></li>
-    </ul>
-    <div class="chip" aria-live="polite" aria-atomic="true">0% read</div>
-  </nav>
-</header>
-
-<main id="main">
-  <!-- Intro -->
-  <section id="intro" class="panel hero">
-    <div class="container hero-inner">
-      <h1 class="reveal-from-bottom">My GSAP Journey</h1>
-      <p class="lead reveal-from-bottom delay-1">
-        <span id="type-line">I started with zero animation knowledge.</span>
-      </p>
-      <p class="reveal-from-bottom delay-2 small-muted">Timeline: Aug 1 to Aug 12</p>
-      <a href="#problem" class="btn reveal-from-bottom delay-2">Begin</a>
+  <header class="site-header">
+    <div class="progress-wrap" aria-hidden="true">
+      <div class="progress-bar"></div>
     </div>
-  </section>
+    <nav class="container nav">
+      <div class="brand">Learning GSAP</div>
+      <ul class="nav-links">
+        <li><a href="#intro">Intro</a></li>
+        <li><a href="#problem">The Problem</a></li>
+        <li><a href="#discover">Discover</a></li>
+        <li><a href="#chapter-h">Concepts</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#outro">Finish</a></li>
+      </ul>
+      <div class="chip" aria-live="polite" aria-atomic="true">0% read</div>
+    </nav>
+  </header>
 
-  <!-- The Problem -->
-  <section id="problem" class="panel alt">
-    <div class="container two-col">
-      <div class="col text">
-        <h2 class="reveal-from-left">The Problem I Wanted To Solve</h2>
-        <p class="reveal-from-left delay-1">
-          My pages felt static. CSS transitions were fine, but I needed control over timing, chaining, and scroll based motion. I also wanted performance that holds up on mobile.
+  <main id="main">
+    <!-- Intro -->
+    <section id="intro" class="panel hero">
+      <div class="container hero-inner">
+        <h1 class="reveal-from-bottom">My GSAP Journey</h1>
+        <p class="lead reveal-from-bottom delay-1">
+          <span id="type-line">I started with zero animation knowledge.</span>
         </p>
-        <ul class="bullets reveal-from-left delay-2">
-          <li>Animate with code, not exports</li>
-          <li>Sync motion to scroll position</li>
-          <li>Build timelines I can reason about</li>
-        </ul>
+        <p class="reveal-from-bottom delay-2 small-muted">Timeline: Aug 1 to Aug 12</p>
+        <a href="#problem" class="btn reveal-from-bottom delay-2">Begin</a>
       </div>
-      <div class="col media">
-        <figure class="code-card reveal-from-right">
+    </section>
+
+    <!-- The Problem -->
+    <section id="problem" class="panel alt">
+      <div class="container two-col">
+        <div class="col text">
+          <h2 class="reveal-from-left">The Problem I Wanted To Solve</h2>
+          <p class="reveal-from-left delay-1">
+            My pages felt static. CSS transitions were fine, but I needed control over timing, chaining, and scroll‑based motion. I also wanted performance that holds up on mobile.
+          </p>
+          <ul class="bullets reveal-from-left delay-2">
+            <li>Animate with code, not exports</li>
+            <li>Sync motion to scroll position</li>
+            <li>Build timelines I can reason about</li>
+          </ul>
+        </div>
+        <div class="col media">
+          <figure class="code-card reveal-from-right">
 <pre><code class="code">// goals.js
 const goals = [
   "Control easing and timing",
@@ -76,17 +70,17 @@ const goals = [
   "Respect reduced-motion",
   "Keep it fast on mobile"
 ];</code></pre>
-          <figcaption>Project goals in code form</figcaption>
-        </figure>
+            <figcaption>Project goals in code form</figcaption>
+          </figure>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Discovering GSAP (Pinned walkthrough) -->
-  <section id="discover" class="panel">
-    <div class="container two-col reverse pin-wrap">
-      <div class="col media pin-target">
-        <figure class="code-card">
+    <!-- Discovering GSAP (Pinned walkthrough) -->
+    <section id="discover" class="panel">
+      <div class="container two-col reverse pin-wrap">
+        <div class="col media pin-target">
+          <figure class="code-card">
 <pre><code class="code">// main.js
 gsap.registerPlugin(ScrollTrigger);
 
@@ -101,107 +95,106 @@ ScrollTrigger.create({
   start: "top 80%",
   onEnter: () => console.log("Chapter 1 in view")
 });</code></pre>
-          <figcaption>First timeline and first trigger</figcaption>
-        </figure>
+            <figcaption>First timeline and first trigger</figcaption>
+          </figure>
+        </div>
+        <div class="col text">
+          <h2 class="reveal-from-right">What I Learned First</h2>
+          <p class="reveal-from-right delay-1">
+            The core pattern is simple: animate properties with .to or .from, then chain those calls in a timeline. ScrollTrigger wires those animations to the page.
+          </p>
+          <ul class="bullets reveal-from-right delay-2">
+            <li>.to and .from for property animation</li>
+            <li>.timeline to sequence steps</li>
+            <li>ScrollTrigger to pin, scrub, and observe</li>
+          </ul>
+          <p class="reveal-from-right delay-2">
+            Pinning keeps an element fixed while content scrolls. Scrubbing ties animation progress to scroll progress. It feels great when used lightly.
+          </p>
+        </div>
       </div>
-      <div class="col text">
-        <h2 class="reveal-from-right">What I Learned First</h2>
-        <p class="reveal-from-right delay-1">
-          The core pattern is simple: animate properties with .to or .from, then chain those calls in a timeline. ScrollTrigger wires those animations to the page.
-        </p>
-        <ul class="bullets reveal-from-right delay-2">
-          <li>.to and .from for property animation</li>
-          <li>.timeline to sequence steps</li>
-          <li>ScrollTrigger to pin, scrub, and observe</li>
-        </ul>
-        <p class="reveal-from-right delay-2">
-          Pinning keeps an element fixed while content scrolls. Scrubbing ties animation progress to scroll progress. It feels great when used lightly.
-        </p>
+    </section>
+
+    <!-- Horizontal concepts -->
+    <section id="chapter-h" class="panel horiz">
+      <div class="h-inner">
+        <article class="h-card">Timelines are stories made of tiny beats</article>
+        <article class="h-card">Scroll gives the audience the remote</article>
+        <article class="h-card">Easing changes the mood</article>
+        <article class="h-card">Performance is a design choice</article>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Horizontal concepts chapter -->
-  <section id="chapter-h" class="panel horiz">
-    <div class="h-inner">
-      <article class="h-card">Timelines are stories made of tiny beats</article>
-      <article class="h-card">Scroll gives the audience the remote</article>
-      <article class="h-card">Easing changes the mood</article>
-      <article class="h-card">Performance is a design choice</article>
-    </div>
-  </section>
-
-  <!-- Results with counters -->
-  <section id="results" class="panel alt center">
-    <div class="container narrow">
-      <h2 class="reveal-from-bottom">Results</h2>
-      <p class="reveal-from-bottom delay-1">What I actually built and measured during this sprint</p>
-      <div class="stats">
-        <div class="stat"><span class="num" data-target="4">0</span><span class="label">Chapters</span></div>
-        <div class="stat"><span class="num" data-target="12">0</span><span class="label">Days</span></div>
-        <div class="stat"><span class="num" data-target="38">0</span><span class="label">Commits</span></div>
-        <div class="stat"><span class="num" data-target="1200">0</span><span class="label">Lines of code</span></div>
+    <!-- Results with counters -->
+    <section id="results" class="panel alt center">
+      <div class="container narrow">
+        <h2 class="reveal-from-bottom">Results</h2>
+        <p class="reveal-from-bottom delay-1">What I actually built and measured during this sprint</p>
+        <div class="stats">
+          <div class="stat"><span class="num" data-target="4">0</span><span class="label">Chapters</span></div>
+          <div class="stat"><span class="num" data-target="12">0</span><span class="label">Days</span></div>
+          <div class="stat"><span class="num" data-target="38">0</span><span class="label">Commits</span></div>
+          <div class="stat"><span class="num" data-target="1200">0</span><span class="label">Lines of code</span></div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- FLIP Micro Gallery -->
-  <section id="gallery" class="panel">
+    <!-- FLIP Micro Gallery -->
+    <section id="gallery" class="panel">
+      <div class="container">
+        <h2 class="reveal-from-bottom">Micro Gallery</h2>
+        <p class="reveal-from-bottom delay-1">Snapshots from my build: timing, stagger, pinning</p>
+        <div class="grid">
+          <figure class="card" data-title="Timing" data-text="Dialed durations and overlaps until the beats felt right.">
+            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Abstract gradients">
+            <figcaption>Timing</figcaption>
+          </figure>
+          <figure class="card" data-title="Stagger" data-text="Used stagger to guide the eye across clusters of content.">
+            <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop" alt="Notebook with code">
+            <figcaption>Stagger</figcaption>
+          </figure>
+          <figure class="card" data-title="Pinning" data-text="Pinned visuals so the narrative could scroll around them.">
+            <img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop" alt="Laptop with editor">
+            <figcaption>Pinning</figcaption>
+          </figure>
+        </div>
+
+        <div class="detail" aria-hidden="true">
+          <button class="close" aria-label="Close detail">×</button>
+          <img alt="">
+          <h3></h3>
+          <p></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Outro badge -->
+    <section id="outro" class="panel center">
+      <div class="container narrow">
+        <h2 class="reveal-from-bottom">I finished the sprint</h2>
+        <p class="reveal-from-bottom delay-1">Reflection is up next. Want to peek at the code or replay the animations</p>
+        <div class="cta-row">
+          <a href="#intro" class="btn reveal-from-bottom delay-2">Back to top</a>
+          <button id="claim-badge" class="btn outline reveal-from-bottom delay-2" type="button">Claim badge</button>
+        </div>
+        <div id="badge" class="badge" aria-hidden="true">GSAP Sprint Complete</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
     <div class="container">
-      <h2 class="reveal-from-bottom">Micro Gallery</h2>
-      <p class="reveal-from-bottom delay-1">Snapshots from my build: timing, stagger, pinning</p>
-      <div class="grid">
-        <figure class="card" data-title="Timing" data-text="Dialed durations and overlaps until the beats felt right.">
-          <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Abstract gradients">
-          <figcaption>Timing</figcaption>
-        </figure>
-        <figure class="card" data-title="Stagger" data-text="Used stagger to guide the eye across clusters of content.">
-          <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop" alt="Notebook with code">
-          <figcaption>Stagger</figcaption>
-        </figure>
-        <figure class="card" data-title="Pinning" data-text="Pinned visuals so the narrative could scroll around them.">
-          <img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop" alt="Laptop with editor">
-          <figcaption>Pinning</figcaption>
-        </figure>
-      </div>
-
-      <div class="detail" aria-hidden="true">
-        <button class="close" aria-label="Close detail">×</button>
-        <img alt="">
-        <h3></h3>
-        <p></p>
-      </div>
+      <p>Built with GSAP, ScrollTrigger, Flip, and TextPlugin. Respects prefers-reduced-motion.</p>
     </div>
-  </section>
+  </footer>
 
-  <!-- Outro badge -->
-  <section id="outro" class="panel center">
-    <div class="container narrow">
-      <h2 class="reveal-from-bottom">I finished the sprint</h2>
-      <p class="reveal-from-bottom delay-1">Reflection is up next. Want to peek at the code or replay the animations</p>
-      <div class="cta-row">
-        <a href="#intro" class="btn reveal-from-bottom delay-2">Back to top</a>
-        <button id="claim-badge" class="btn outline reveal-from-bottom delay-2" type="button">Claim badge</button>
-      </div>
-      <div id="badge" class="badge" aria-hidden="true">GSAP Sprint Complete</div>
-    </div>
-  </section>
-</main>
+  <!-- libs -->
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/gsap@3/dist/Flip.min.js"></script>
+  <script src="https://unpkg.com/gsap@3/dist/TextPlugin.min.js"></script>
 
-<footer class="site-footer">
-  <div class="container">
-    <p>Built with GSAP, ScrollTrigger, Flip, and TextPlugin. Respecting prefers-reduced-motion.</p>
-  </div>
-</footer>
-
-<!-- GSAP + plugins before your custom JS -->
-<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
-<script src="https://unpkg.com/gsap@3/dist/Flip.min.js"></script>
-<script src="https://unpkg.com/gsap@3/dist/TextPlugin.min.js"></script>
-<script src="js/main.js"></script>
-
-
+  <!-- custom js -->
+  <script src="js/main.js"></script>
 </body>
-
 </html>

@@ -1,3 +1,14 @@
+:root {
+  --bg: #ffffff;
+  --text: #111111;
+  --brand: #6366f1;
+  --accent: #22c55e;
+  --panel-dark: #0f172a;
+}
+body { background: var(--bg); color: var(--text); }
+.progress-bar { background: linear-gradient(90deg, #111, var(--brand)); }
+.badge { background: var(--accent); color: #063a20; }
+.panel.alt { background: var(--panel-dark); color: #e5e7eb; }
 
 
 

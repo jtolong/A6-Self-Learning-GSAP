@@ -201,3 +201,23 @@ window.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowUp'   || e.key === 'PageUp') idx = Math.max(idx - 1, 0);
   document.getElementById(chapters[idx]).scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
 });
+document.getElementById('theme-toggle')?.addEventListener('click', () => {
+  const root = document.documentElement;
+  const dark = getComputedStyle(root).getPropertyValue('--bg').trim() !== '#111111';
+  if (dark) {
+    root.style.setProperty('--bg', '#111111');
+    root.style.setProperty('--text', '#f4f4f5');
+    root.style.setProperty('--panel-dark', '#0b1020');
+  } else {
+    root.style.setProperty('--bg', '#ffffff');
+    root.style.setProperty('--text', '#111111');
+    root.style.setProperty('--panel-dark', '#0f172a');
+  }
+});
+
+let motionEnabled = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.getElementById('motion-toggle')?.addEventListener('click', () => {
+  motionEnabled = !motionEnabled;
+  // Simple runtime toggle: pause or kill active ScrollTriggers
+  ScrollTrigger.getAll().forEach(st => motionEnabled ? st.enable() : st.disable());
+});
