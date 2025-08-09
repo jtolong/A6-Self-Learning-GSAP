@@ -73,3 +73,36 @@ if (hSection) {
   // Refresh on resize
   window.addEventListener('resize', () => ScrollTrigger.refresh());
 }
+// FLIP gallery
+const cards = gsap.utils.toArray('#gallery .card');
+const detail = document.querySelector('#gallery .detail');
+const dImg = detail?.querySelector('img');
+const dH3 = detail?.querySelector('h3');
+const dP  = detail?.querySelector('p');
+const dClose = detail?.querySelector('.close');
+
+if (cards.length && detail && dImg && dH3 && dP) {
+  const openCard = (card) => {
+    const state = Flip.getState(card.querySelector('img'));
+    detail.style.display = 'block';
+    dImg.src = card.querySelector('img').src;
+    dImg.alt = card.querySelector('img').alt;
+    dH3.textContent = card.dataset.title || '';
+    dP.textContent = card.dataset.text || '';
+    Flip.from(state, {
+      duration: 0.6,
+      ease: 'power2.inOut',
+      absolute: true,
+      onComplete: () => {}
+    });
+    gsap.fromTo(detail, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: 'power1.out' });
+  };
+
+  const closeDetail = () => {
+    gsap.to(detail, { opacity: 0, duration: 0.25, onComplete: () => detail.style.display = 'none' });
+  };
+
+  cards.forEach(card => card.addEventListener('click', () => openCard(card)));
+  dClose?.addEventListener('click', closeDetail);
+  detail?.addEventListener('click', (e) => { if (e.target === detail) closeDetail(); });
+}
