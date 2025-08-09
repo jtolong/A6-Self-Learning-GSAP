@@ -26,14 +26,17 @@
     <div class="progress-bar"></div>
   </div>
   <nav class="container nav">
-    <div class="brand">Scroll Story</div>
+    <div class="brand">Learning GSAP</div>
     <ul class="nav-links">
       <li><a href="#intro">Intro</a></li>
-      <li><a href="#chapter1">Concept</a></li>
-      <li><a href="#chapter2">Pinned Visual</a></li>
-      <li><a href="#chapter3">Timeline</a></li>
-      <li><a href="#chapter4">Takeaways</a></li>
+      <li><a href="#problem">The Problem</a></li>
+      <li><a href="#discover">Discovering GSAP</a></li>
+      <li><a href="#chapter-h">Concepts</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#outro">Finish</a></li>
     </ul>
+    <div class="chip" aria-live="polite" aria-atomic="true">0% read</div>
   </nav>
 </header>
 
@@ -41,133 +44,163 @@
   <!-- Intro -->
   <section id="intro" class="panel hero">
     <div class="container hero-inner">
-      <h1 class="reveal-from-bottom">Animating With GSAP</h1>
+      <h1 class="reveal-from-bottom">My GSAP Journey</h1>
       <p class="lead reveal-from-bottom delay-1">
-        A small interactive story about learning motion with real JavaScript.
+        <span id="type-line">I started with zero animation knowledge.</span>
       </p>
-      <a href="#chapter1" class="btn reveal-from-bottom delay-2">Begin</a>
+      <p class="reveal-from-bottom delay-2 small-muted">Timeline: Aug 1 to Aug 12</p>
+      <a href="#problem" class="btn reveal-from-bottom delay-2">Begin</a>
     </div>
   </section>
 
-  <!-- Chapter 1: concept -->
-  <section id="chapter1" class="panel alt">
+  <!-- The Problem -->
+  <section id="problem" class="panel alt">
     <div class="container two-col">
       <div class="col text">
-        <h2 class="reveal-from-left">Why GSAP</h2>
+        <h2 class="reveal-from-left">The Problem I Wanted To Solve</h2>
         <p class="reveal-from-left delay-1">
-          GSAP gives precise control of timing, easing, and sequencing. It is designed for performance and pairs well with scroll based storytelling.
+          My pages felt static. CSS transitions were fine, but I needed control over timing, chaining, and scroll based motion. I also wanted performance that holds up on mobile.
         </p>
         <ul class="bullets reveal-from-left delay-2">
-          <li>Timelines to chain animations</li>
-          <li>ScrollTrigger to sync motion with scroll</li>
-          <li>Robust easing and staggering</li>
+          <li>Animate with code, not exports</li>
+          <li>Sync motion to scroll position</li>
+          <li>Build timelines I can reason about</li>
         </ul>
       </div>
       <div class="col media">
-        <img class="reveal-from-right" src="https://images.unsplash.com/photo-1526498460520-4c246339dccb?q=80&w=1600&auto=format&fit=crop" alt="Colorful gradients representing motion">
+        <figure class="code-card reveal-from-right">
+<pre><code class="code">// goals.js
+const goals = [
+  "Control easing and timing",
+  "Chain sequences with timelines",
+  "Respect reduced-motion",
+  "Keep it fast on mobile"
+];</code></pre>
+          <figcaption>Project goals in code form</figcaption>
+        </figure>
       </div>
     </div>
   </section>
 
-  <!-- Chapter 2: pinned image with scrolling text -->
-  <section id="chapter2" class="panel">
+  <!-- Discovering GSAP (Pinned walkthrough) -->
+  <section id="discover" class="panel">
     <div class="container two-col reverse pin-wrap">
       <div class="col media pin-target">
-        <img class="reveal-from-left" src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1600&auto=format&fit=crop" alt="Laptop with code editor open">
+        <figure class="code-card">
+<pre><code class="code">// main.js
+gsap.registerPlugin(ScrollTrigger);
+
+const tl = gsap.timeline({ defaults: { ease: "power2.out", duration: 0.8 } });
+
+tl.from(".hero h1", { y: 40, opacity: 0 })
+  .from(".hero .lead", { y: 20, opacity: 0 }, "&lt;")
+  .from(".hero .btn",  { y: 20, opacity: 0 }, "&lt;0.2");
+
+ScrollTrigger.create({
+  trigger: "#problem",
+  start: "top 80%",
+  onEnter: () => console.log("Chapter 1 in view")
+});</code></pre>
+          <figcaption>First timeline and first trigger</figcaption>
+        </figure>
       </div>
       <div class="col text">
-        <h2 class="reveal-from-right">Pinned Visual</h2>
+        <h2 class="reveal-from-right">What I Learned First</h2>
         <p class="reveal-from-right delay-1">
-          As you scroll, the image stays fixed while these paragraphs move. This helps focus on one visual while the narrative unfolds.
+          The core pattern is simple: animate properties with .to or .from, then chain those calls in a timeline. ScrollTrigger wires those animations to the page.
         </p>
-        <p class="reveal-from-right">
-          You can present steps, comparisons, or layered explanations while the media remains in view.
-        </p>
-        <p class="reveal-from-right">
-          Pinning is handled by ScrollTrigger with a single config.
+        <ul class="bullets reveal-from-right delay-2">
+          <li>.to and .from for property animation</li>
+          <li>.timeline to sequence steps</li>
+          <li>ScrollTrigger to pin, scrub, and observe</li>
+        </ul>
+        <p class="reveal-from-right delay-2">
+          Pinning keeps an element fixed while content scrolls. Scrubbing ties animation progress to scroll progress. It feels great when used lightly.
         </p>
       </div>
     </div>
   </section>
 
+  <!-- Horizontal concepts chapter -->
   <section id="chapter-h" class="panel horiz">
-  <div class="h-inner">
-    <article class="h-card">Design with intention</article>
-    <article class="h-card">Animate the hierarchy</article>
-    <article class="h-card">Guide attention</article>
-    <article class="h-card">Ship fast, polish later</article>
-  </div>
-</section>
-
-
-  <!-- Chapter 3: timeline checkpoints -->
-  <section id="chapter3" class="panel alt">
-    <div class="container narrow">
-      <h2 class="reveal-from-bottom">Project Timeline</h2>
-      <ol class="timeline">
-        <li class="reveal-from-bottom">Learn basics and test small animations</li>
-        <li class="reveal-from-bottom">Build layout and wire scroll triggers</li>
-        <li class="reveal-from-bottom">Refine easing and responsiveness</li>
-        <li class="reveal-from-bottom">Polish, deploy, and document</li>
-      </ol>
+    <div class="h-inner">
+      <article class="h-card">Timelines are stories made of tiny beats</article>
+      <article class="h-card">Scroll gives the audience the remote</article>
+      <article class="h-card">Easing changes the mood</article>
+      <article class="h-card">Performance is a design choice</article>
     </div>
   </section>
 
-  <!-- Chapter 4: takeaways and CTA -->
-  <section id="chapter4" class="panel center">
+  <!-- Results with counters -->
+  <section id="results" class="panel alt center">
     <div class="container narrow">
-      <h2 class="reveal-from-bottom">Key Takeaways</h2>
-      <p class="reveal-from-bottom delay-1">
-        Motion communicates hierarchy and guides attention. GSAP lets you design that flow with code.
-      </p>
-      <a href="#intro" class="btn reveal-from-bottom delay-2">Back to top</a>
+      <h2 class="reveal-from-bottom">Results</h2>
+      <p class="reveal-from-bottom delay-1">What I actually built and measured during this sprint</p>
+      <div class="stats">
+        <div class="stat"><span class="num" data-target="4">0</span><span class="label">Chapters</span></div>
+        <div class="stat"><span class="num" data-target="12">0</span><span class="label">Days</span></div>
+        <div class="stat"><span class="num" data-target="38">0</span><span class="label">Commits</span></div>
+        <div class="stat"><span class="num" data-target="1200">0</span><span class="label">Lines of code</span></div>
+      </div>
     </div>
   </section>
 
-  
-<section id="gallery" class="panel">
-  <div class="container">
-    <h2 class="reveal-from-bottom">Micro Gallery</h2>
-    <div class="grid">
-      <figure class="card" data-title="Timing" data-text="Short note about easing and rhythm.">
-        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Abstract 1">
-        <figcaption>Timing</figcaption>
-      </figure>
-      <figure class="card" data-title="Stagger" data-text="Staggered entries guide the eye.">
-        <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop" alt="Abstract 2">
-        <figcaption>Stagger</figcaption>
-      </figure>
-      <figure class="card" data-title="Pinning" data-text="Hold focus while content scrolls.">
-        <img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop" alt="Abstract 3">
-        <figcaption>Pinning</figcaption>
-      </figure>
-    </div>
+  <!-- FLIP Micro Gallery -->
+  <section id="gallery" class="panel">
+    <div class="container">
+      <h2 class="reveal-from-bottom">Micro Gallery</h2>
+      <p class="reveal-from-bottom delay-1">Snapshots from my build: timing, stagger, pinning</p>
+      <div class="grid">
+        <figure class="card" data-title="Timing" data-text="Dialed durations and overlaps until the beats felt right.">
+          <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Abstract gradients">
+          <figcaption>Timing</figcaption>
+        </figure>
+        <figure class="card" data-title="Stagger" data-text="Used stagger to guide the eye across clusters of content.">
+          <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop" alt="Notebook with code">
+          <figcaption>Stagger</figcaption>
+        </figure>
+        <figure class="card" data-title="Pinning" data-text="Pinned visuals so the narrative could scroll around them.">
+          <img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop" alt="Laptop with editor">
+          <figcaption>Pinning</figcaption>
+        </figure>
+      </div>
 
-    <div class="detail" aria-hidden="true">
-      <button class="close" aria-label="Close detail">×</button>
-      <img alt="">
-      <h3></h3>
-      <p></p>
+      <div class="detail" aria-hidden="true">
+        <button class="close" aria-label="Close detail">×</button>
+        <img alt="">
+        <h3></h3>
+        <p></p>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <!-- Outro badge -->
+  <section id="outro" class="panel center">
+    <div class="container narrow">
+      <h2 class="reveal-from-bottom">I finished the sprint</h2>
+      <p class="reveal-from-bottom delay-1">Reflection is up next. Want to peek at the code or replay the animations</p>
+      <div class="cta-row">
+        <a href="#intro" class="btn reveal-from-bottom delay-2">Back to top</a>
+        <button id="claim-badge" class="btn outline reveal-from-bottom delay-2" type="button">Claim badge</button>
+      </div>
+      <div id="badge" class="badge" aria-hidden="true">GSAP Sprint Complete</div>
+    </div>
+  </section>
 </main>
-
 
 <footer class="site-footer">
   <div class="container">
-    <p>Built with GSAP and ScrollTrigger</p>
+    <p>Built with GSAP, ScrollTrigger, Flip, and TextPlugin. Respecting prefers-reduced-motion.</p>
   </div>
 </footer>
 
-
-    <!-- JS Libraries -->
-    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-    <script src="https://unpkg.com/gsap@3/dist/Flip.min.js"></script>
+<!-- GSAP + plugins before your custom JS -->
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
 <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/Flip.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/TextPlugin.min.js"></script>
+<script src="js/main.js"></script>
 
-    <!-- Custom JS -->
-    <script src="js/main.js"></script>
 
 </body>
 
