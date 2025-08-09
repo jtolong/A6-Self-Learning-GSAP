@@ -4,19 +4,168 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GSAP</title>
+    <title>Grimm Trails</title>
 
     <!-- reset & fonts -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@3.0.0/reset.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap"
+        rel="stylesheet" />
 
     <!-- css libraries -->
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css" />
 
     <!-- custom css -->
     <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
+<header class="site-header">
+  <div class="progress-wrap" aria-hidden="true">
+    <div class="progress-bar"></div>
+  </div>
+  <nav class="container nav">
+    <div class="brand">Scroll Story</div>
+    <ul class="nav-links">
+      <li><a href="#intro">Intro</a></li>
+      <li><a href="#chapter1">Concept</a></li>
+      <li><a href="#chapter2">Pinned Visual</a></li>
+      <li><a href="#chapter3">Timeline</a></li>
+      <li><a href="#chapter4">Takeaways</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+  <!-- Intro -->
+  <section id="intro" class="panel hero">
+    <div class="container hero-inner">
+      <h1 class="reveal-from-bottom">Animating With GSAP</h1>
+      <p class="lead reveal-from-bottom delay-1">
+        A small interactive story about learning motion with real JavaScript.
+      </p>
+      <a href="#chapter1" class="btn reveal-from-bottom delay-2">Begin</a>
+    </div>
+  </section>
+
+  <!-- Chapter 1: concept -->
+  <section id="chapter1" class="panel alt">
+    <div class="container two-col">
+      <div class="col text">
+        <h2 class="reveal-from-left">Why GSAP</h2>
+        <p class="reveal-from-left delay-1">
+          GSAP gives precise control of timing, easing, and sequencing. It is designed for performance and pairs well with scroll based storytelling.
+        </p>
+        <ul class="bullets reveal-from-left delay-2">
+          <li>Timelines to chain animations</li>
+          <li>ScrollTrigger to sync motion with scroll</li>
+          <li>Robust easing and staggering</li>
+        </ul>
+      </div>
+      <div class="col media">
+        <img class="reveal-from-right" src="https://images.unsplash.com/photo-1526498460520-4c246339dccb?q=80&w=1600&auto=format&fit=crop" alt="Colorful gradients representing motion">
+      </div>
+    </div>
+  </section>
+
+  <!-- Chapter 2: pinned image with scrolling text -->
+  <section id="chapter2" class="panel">
+    <div class="container two-col reverse pin-wrap">
+      <div class="col media pin-target">
+        <img class="reveal-from-left" src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1600&auto=format&fit=crop" alt="Laptop with code editor open">
+      </div>
+      <div class="col text">
+        <h2 class="reveal-from-right">Pinned Visual</h2>
+        <p class="reveal-from-right delay-1">
+          As you scroll, the image stays fixed while these paragraphs move. This helps focus on one visual while the narrative unfolds.
+        </p>
+        <p class="reveal-from-right">
+          You can present steps, comparisons, or layered explanations while the media remains in view.
+        </p>
+        <p class="reveal-from-right">
+          Pinning is handled by ScrollTrigger with a single config.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="chapter-h" class="panel horiz">
+  <div class="h-inner">
+    <article class="h-card">Design with intention</article>
+    <article class="h-card">Animate the hierarchy</article>
+    <article class="h-card">Guide attention</article>
+    <article class="h-card">Ship fast, polish later</article>
+  </div>
+</section>
+
+
+  <!-- Chapter 3: timeline checkpoints -->
+  <section id="chapter3" class="panel alt">
+    <div class="container narrow">
+      <h2 class="reveal-from-bottom">Project Timeline</h2>
+      <ol class="timeline">
+        <li class="reveal-from-bottom">Learn basics and test small animations</li>
+        <li class="reveal-from-bottom">Build layout and wire scroll triggers</li>
+        <li class="reveal-from-bottom">Refine easing and responsiveness</li>
+        <li class="reveal-from-bottom">Polish, deploy, and document</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Chapter 4: takeaways and CTA -->
+  <section id="chapter4" class="panel center">
+    <div class="container narrow">
+      <h2 class="reveal-from-bottom">Key Takeaways</h2>
+      <p class="reveal-from-bottom delay-1">
+        Motion communicates hierarchy and guides attention. GSAP lets you design that flow with code.
+      </p>
+      <a href="#intro" class="btn reveal-from-bottom delay-2">Back to top</a>
+    </div>
+  </section>
+
+  
+<section id="gallery" class="panel">
+  <div class="container">
+    <h2 class="reveal-from-bottom">Micro Gallery</h2>
+    <div class="grid">
+      <figure class="card" data-title="Timing" data-text="Short note about easing and rhythm.">
+        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Abstract 1">
+        <figcaption>Timing</figcaption>
+      </figure>
+      <figure class="card" data-title="Stagger" data-text="Staggered entries guide the eye.">
+        <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop" alt="Abstract 2">
+        <figcaption>Stagger</figcaption>
+      </figure>
+      <figure class="card" data-title="Pinning" data-text="Hold focus while content scrolls.">
+        <img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop" alt="Abstract 3">
+        <figcaption>Pinning</figcaption>
+      </figure>
+    </div>
+
+    <div class="detail" aria-hidden="true">
+      <button class="close" aria-label="Close detail">×</button>
+      <img alt="">
+      <h3></h3>
+      <p></p>
+    </div>
+  </div>
+</section>
+</main>
+
+
+<footer class="site-footer">
+  <div class="container">
+    <p>Built with GSAP and ScrollTrigger</p>
+  </div>
+</footer>
+
+
+    <!-- JS Libraries -->
+    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/Flip.min.js"></script>
+
+<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
 
     <!-- Custom JS -->
     <script src="js/main.js"></script>
