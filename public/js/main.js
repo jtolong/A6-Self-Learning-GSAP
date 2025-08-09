@@ -1,7 +1,8 @@
-// register plugins
-gsap.registerPlugin(ScrollTrigger, Flip, TextPlugin);
+// register gsap plugins
+gsap.registerPlugin(ScrollTrigger, Flip);
 
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let motionEnabled = !prefersReduced;
 
 // progress bar
 const progressEl = document.querySelector('.progress-bar');
@@ -14,35 +15,19 @@ if (progressEl) {
   });
 }
 
-// chapter chip
+// chapter chip (percent read)
 const chip = document.querySelector('.chip');
 if (chip) {
-  const panels = gsap.utils.toArray('.panel');
-  panels.forEach((p, i) => {
-    ScrollTrigger.create({
-      trigger: p,
-      start: 'top center',
-      end: 'bottom center',
-      onEnter: () => chip.textContent = `Chapter ${i + 1} of ${panels.length}`,
-      onEnterBack: () => chip.textContent = `Chapter ${i + 1} of ${panels.length}`
-    });
+  ScrollTrigger.create({
+    start: 0,
+    end: () => document.documentElement.scrollHeight - window.innerHeight,
+    onUpdate: self => chip.textContent = `${Math.round(self.progress * 100)} percent`
   });
-}
-
-// intro typing and hero
-if (!reduceMotion) {
-  gsap.to('#type-line', {
-    text: 'I started with zero animation knowledge. By day 12 I could build scroll based stories with GSAP.',
-    duration: 3.2, ease: 'none', delay: 0.3
-  });
-
-  gsap.timeline({ defaults: { ease: 'power2.out', duration: 0.9 } })
-    .from('.hero .reveal-from-bottom', { y: 40, opacity: 0, stagger: 0.12 });
 }
 
 // generic reveals
-const makeReveal = (selector) => {
-  if (reduceMotion) return;
+const reveal = (selector) => {
+  if (!motionEnabled) return;
   gsap.utils.toArray(selector).forEach((el) => {
     gsap.from(el, {
       scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' },
@@ -53,173 +38,150 @@ const makeReveal = (selector) => {
     });
   });
 };
-makeReveal('.reveal-from-bottom');
-makeReveal('.reveal-from-left');
-makeReveal('.reveal-from-right');
+reveal('.reveal-from-bottom'); reveal('.reveal-from-left'); reveal('.reveal-from-right');
 
-// pinned code block in Discover
+// Chapter 1 animation: compare boxes
+if (motionEnabled) {
+  gsap.from('#chapter1 .css-box', { x: -80, opacity: 0, duration: 0.8, ease: 'power2.out', scrollTrigger: '#chapter1' });
+  gsap.from('#chapter1 .gsap-box', { x: 80, opacity: 0, duration: 0.8, ease: 'power2.out', scrollTrigger: '#chapter1', delay: 0.1 });
+  gsap.to('#chapter1 .gsap-box', { scale: 1.06, repeat: 1, yoyo: true, duration: 0.4, ease: 'power1.inOut', scrollTrigger: { trigger: '#chapter1 .gsap-box', start: 'top 80%' }});
+}
+
+// Chapter 2: button drives a tiny timeline on dots
+const btn = document.getElementById('btn-demo');
+if (btn && motionEnabled) {
+  const tl = gsap.timeline({ defaults: { duration: 0.5, ease: 'power2.out' }});
+  btn.addEventListener('click', () => {
+    tl.clear()
+      .from('.demo-one', { y: 18, opacity: 0 })
+      .from('.demo-two', { x: -18, opacity: 0 }, '<0.15')
+      .from('.demo-three', { scale: 0.8, opacity: 0 }, '<0.15');
+  });
+}
+
+// Chapter 3: pinned visual and step text
 ScrollTrigger.matchMedia({
   '(min-width: 900px)': function() {
     ScrollTrigger.create({
-      trigger: '#discover .pin-wrap',
+      trigger: '#chapter3 .pin-wrap',
       start: 'top 15%',
       end: 'bottom 60%',
-      pin: '#discover .pin-target',
+      pin: '#chapter3 .pin-target',
       pinSpacing: false,
-      anticipatePin: 1
+      anticipatePin: 1,
+      enabled: motionEnabled
     });
   }
 });
-
-// horizontal scroll section
-const hSection = document.querySelector('#chapter-h .h-inner');
-if (hSection && !reduceMotion) {
-  const cards = gsap.utils.toArray('#chapter-h .h-card');
-  const totalWidth = () => hSection.scrollWidth - window.innerWidth;
-
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: '#chapter-h', start: 'top top', end: () => `+=${totalWidth()}`,
-      scrub: 1, pin: true, anticipatePin: 1
-    }
-  });
-
-  tl.to(hSection, { x: () => -totalWidth(), ease: 'none' });
-
-  cards.forEach((card) => {
-    gsap.from(card, {
-      scale: 0.9, opacity: 0.6,
-      scrollTrigger: { trigger: card, containerAnimation: tl, start: 'left center', end: 'right center', scrub: true }
+if (motionEnabled) {
+  gsap.utils.toArray('#chapter3 .step').forEach((s, i) => {
+    gsap.from(s, {
+      scrollTrigger: { trigger: s, start: 'top 85%' },
+      opacity: 0, x: 24, duration: 0.7, ease: 'power2.out', delay: i * 0.05
     });
   });
-
-  window.addEventListener('resize', () => ScrollTrigger.refresh());
 }
 
-// counters
-gsap.utils.toArray('#results .num').forEach(num => {
+// Chapter 4: stagger icons
+if (motionEnabled) {
+  gsap.from('#chapter4 .icon', {
+    scrollTrigger: { trigger: '#chapter4 .icon-grid', start: 'top 80%' },
+    opacity: 0, y: 24, stagger: { each: 0.06, from: 'edges' }, duration: 0.5, ease: 'power2.out'
+  });
+}
+
+// Chapter 5: Flip shuffle/sort
+const grid = document.getElementById('flip-grid');
+const btnShuffle = document.getElementById('flip-shuffle');
+const btnSort = document.getElementById('flip-sort');
+
+const shuffle = (arr) => arr.sort(() => Math.random() - 0.5);
+const sortAZ = (arr) => arr.sort((a, b) => a.dataset.key.localeCompare(b.dataset.key));
+
+function flipTo(orderFn) {
+  const items = Array.from(grid.children);
+  const state = Flip.getState(items);
+  orderFn(items);
+  items.forEach(el => grid.appendChild(el));
+  Flip.from(state, { duration: motionEnabled ? 0.5 : 0, ease: 'power2.inOut', stagger: motionEnabled ? 0.03 : 0 });
+}
+btnShuffle?.addEventListener('click', () => flipTo(shuffle));
+btnSort?.addEventListener('click', () => flipTo(sortAZ));
+
+// Chapter 6: motion toggle and device hint animations
+const motionToggle = document.getElementById('motion-toggle');
+motionToggle?.addEventListener('click', () => {
+  motionEnabled = !motionEnabled;
+  // quick feedback pulse on screens
+  if (motionEnabled) {
+    gsap.fromTo('.screen', { scale: 0.98 }, { scale: 1, duration: 0.3, ease: 'power1.out' });
+    ScrollTrigger.getAll().forEach(st => st.enable());
+  } else {
+    ScrollTrigger.getAll().forEach(st => st.disable());
+  }
+});
+
+// Chapter 7: counters + badge + confetti
+gsap.utils.toArray('#chapter7 .num').forEach(num => {
   const target = +num.dataset.target;
   ScrollTrigger.create({
-    trigger: num,
-    start: 'top 75%', once: true,
+    trigger: num, start: 'top 75%', once: true,
     onEnter: () => {
-      gsap.fromTo(num, { innerText: 0 }, { innerText: target, duration: 1.2, ease: 'power1.out', snap: { innerText: 1 } });
+      if (motionEnabled) {
+        gsap.fromTo(num, { innerText: 0 }, { innerText: target, duration: 1.1, ease: 'power1.out', snap: { innerText: 1 } });
+      } else {
+        num.textContent = target;
+      }
     }
   });
 });
 
-// FLIP gallery
-const cards = gsap.utils.toArray('#gallery .card');
-const detail = document.querySelector('#gallery .detail');
-const dImg = detail?.querySelector('img');
-const dH3 = detail?.querySelector('h3');
-const dP  = detail?.querySelector('p');
-const dClose = detail?.querySelector('.close');
-
-if (cards.length && detail && dImg && dH3 && dP) {
-  const openCard = (card) => {
-    const img = card.querySelector('img');
-    const state = Flip.getState(img);
-    detail.style.display = 'block';
-    dImg.src = img.src; dImg.alt = img.alt;
-    dH3.textContent = card.dataset.title || '';
-    dP.textContent = card.dataset.text || '';
-    Flip.from(state, { duration: 0.55, ease: 'power2.inOut', absolute: true });
-    gsap.fromTo(detail, { opacity: 0 }, { opacity: 1, duration: 0.25 });
-  };
-
-  const closeDetail = () => gsap.to(detail, { opacity: 0, duration: 0.2, onComplete: () => detail.style.display = 'none' });
-
-  cards.forEach(card => card.addEventListener('click', () => openCard(card)));
-  dClose?.addEventListener('click', closeDetail);
-  detail?.addEventListener('click', (e) => { if (e.target === detail) closeDetail(); });
-}
-
-// badge + confetti
 const badge = document.getElementById('badge');
 const claimBtn = document.getElementById('claim-badge');
 
-const fireConfetti = () => {
-  if (reduceMotion) return;
+function confetti() {
+  if (!motionEnabled) return;
   const burst = document.createElement('div');
   burst.className = 'confetti-burst';
+  Object.assign(burst.style, { position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 9999 });
   document.body.appendChild(burst);
 
-  const pieces = 40;
+  const pieces = 48;
   for (let i = 0; i < pieces; i++) {
     const dot = document.createElement('span');
     dot.className = 'confetti';
-    burst.appendChild(dot);
-    gsap.set(dot, {
+    Object.assign(dot.style, {
       position: 'absolute', left: '50%', top: '50%',
-      width: gsap.utils.random(6, 10), height: gsap.utils.random(6, 10),
+      width: `${gsap.utils.random(6, 10)}px`, height: `${gsap.utils.random(6, 10)}px`,
       background: `hsl(${gsap.utils.random(0,360)}, 80%, 60%)`,
-      borderRadius: 2, xPercent: -50, yPercent: -50
+      borderRadius: '2px', transform: 'translate(-50%, -50%)'
     });
+    burst.appendChild(dot);
     gsap.to(dot, {
-      x: gsap.utils.random(-200, 200),
-      y: gsap.utils.random(-220, 60),
+      x: gsap.utils.random(-220, 220),
+      y: gsap.utils.random(-240, 80),
       rotation: gsap.utils.random(-180, 180),
       duration: gsap.utils.random(0.8, 1.4),
       ease: 'power2.out',
       onComplete: () => dot.remove()
     });
   }
-  gsap.to(burst, { opacity: 0, duration: 1.6, delay: 0.2, onComplete: () => burst.remove() });
-};
-
-if (claimBtn && badge) {
-  claimBtn.addEventListener('click', () => {
-    gsap.to(badge, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(1.7)' });
-    fireConfetti();
-  });
+  gsap.to(burst, { opacity: 0, duration: 1.4, delay: 0.2, onComplete: () => burst.remove() });
 }
 
-// smooth anchor jumps
+claimBtn?.addEventListener('click', () => {
+  gsap.to(badge, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(1.7)' });
+  confetti();
+});
+
+// smooth in-page links
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', (e) => {
     const id = a.getAttribute('href').slice(1);
     const target = document.getElementById(id);
     if (target) {
       e.preventDefault();
-      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      target.scrollIntoView({ behavior: motionEnabled ? 'smooth' : 'auto', block: 'start' });
     }
   });
 });
-
-// keyboard navigation
-const chapters = gsap.utils.toArray('main .panel').map(s => s.id);
-window.addEventListener('keydown', (e) => {
-  if (!['ArrowDown','ArrowUp','PageDown','PageUp',' '].includes(e.key)) return;
-  e.preventDefault();
-  const y = window.scrollY + 1;
-  let idx = chapters.findIndex(id => {
-    const el = document.getElementById(id);
-    return el.offsetTop <= y && el.offsetTop + el.offsetHeight > y;
-    });
-  if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') idx = Math.min(idx + 1, chapters.length - 1);
-  if (e.key === 'ArrowUp'   || e.key === 'PageUp') idx = Math.max(idx - 1, 0);
-  document.getElementById(chapters[idx]).scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
-});
-document.getElementById('theme-toggle')?.addEventListener('click', () => {
-  const root = document.documentElement;
-  const dark = getComputedStyle(root).getPropertyValue('--bg').trim() !== '#111111';
-  if (dark) {
-    root.style.setProperty('--bg', '#111111');
-    root.style.setProperty('--text', '#f4f4f5');
-    root.style.setProperty('--panel-dark', '#0b1020');
-  } else {
-    root.style.setProperty('--bg', '#ffffff');
-    root.style.setProperty('--text', '#111111');
-    root.style.setProperty('--panel-dark', '#0f172a');
-  }
-});
-
-let motionEnabled = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-document.getElementById('motion-toggle')?.addEventListener('click', () => {
-  motionEnabled = !motionEnabled;
-  // Simple runtime toggle: pause or kill active ScrollTriggers
-  ScrollTrigger.getAll().forEach(st => motionEnabled ? st.enable() : st.disable());
-});
-gsap.from("#chapter1 .css-box", { opacity: 0, x: -100, duration: 1, scrollTrigger: "#chapter1" });
-gsap.from("#chapter1 .gsap-box", { opacity: 0, x: 100, duration: 1, delay: 0.3, scrollTrigger: "#chapter1" });
