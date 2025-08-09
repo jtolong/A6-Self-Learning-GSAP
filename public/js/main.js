@@ -37,3 +37,39 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     }
   });
 });
+// Horizontal scroll section
+const hSection = document.querySelector('#chapter-h .h-inner');
+if (hSection) {
+  const cards = gsap.utils.toArray('#chapter-h .h-card');
+  const totalWidth = () => hSection.scrollWidth - window.innerWidth;
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '#chapter-h',
+      start: 'top top',
+      end: () => `+=${totalWidth()}`,
+      scrub: 1,
+      pin: true,
+      anticipatePin: 1
+    }
+  });
+
+  tl.to(hSection, { x: () => -totalWidth(), ease: 'none' });
+
+  // Subtle per card scale in
+  cards.forEach((card, i) => {
+    gsap.from(card, {
+      scale: 0.9, opacity: 0.6,
+      scrollTrigger: {
+        trigger: card,
+        containerAnimation: tl,
+        start: 'left center',
+        end: 'right center',
+        scrub: true
+      }
+    });
+  });
+
+  // Refresh on resize
+  window.addEventListener('resize', () => ScrollTrigger.refresh());
+}
