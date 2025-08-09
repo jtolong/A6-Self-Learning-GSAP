@@ -221,3 +221,5 @@ document.getElementById('motion-toggle')?.addEventListener('click', () => {
   // Simple runtime toggle: pause or kill active ScrollTriggers
   ScrollTrigger.getAll().forEach(st => motionEnabled ? st.enable() : st.disable());
 });
+gsap.from("#chapter1 .css-box", { opacity: 0, x: -100, duration: 1, scrollTrigger: "#chapter1" });
+gsap.from("#chapter1 .gsap-box", { opacity: 0, x: 100, duration: 1, delay: 0.3, scrollTrigger: "#chapter1" });
